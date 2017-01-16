@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DotNetOpen.Common.IoC
+namespace DotNetOpen.Common
 {
     public class ServiceInstallerFactory : InstallerFactory
     {

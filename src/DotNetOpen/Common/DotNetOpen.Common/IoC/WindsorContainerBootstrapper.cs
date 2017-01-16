@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace DotNetOpen.Common.IoC
+namespace DotNetOpen.Common
 {
     public class WindsorContainerBootstrapper
     {
