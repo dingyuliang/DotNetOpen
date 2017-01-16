@@ -1,21 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DotNetOpen.Data
 {
-    /// <summary>
-    /// for IoC purpose
-    /// </summary>
-    public interface IRepository
+    public interface IDomainService<T>
     {
-    }
-
-    public interface IRepository<T>: IRepository
-        where T : class
-    {
-        bool Add( T entity);
+        bool Add(T entity);
         void AddRange(params T[] entities);
         bool Update(T entity);
         void UpdateRange(params T[] entities);

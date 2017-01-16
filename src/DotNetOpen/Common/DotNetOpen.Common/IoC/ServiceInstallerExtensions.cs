@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+using Castle.Windsor;
 
 namespace DotNetOpen.Common
 {
     public static class ServiceInstallerExtensions
     {
-        public static IServiceCollection AddInstaller<TServiceInstaller>(this IServiceCollection services)
+        public static IWindsorContainer AddInstaller<TServiceInstaller>(this IWindsorContainer container)
          where TServiceInstaller : IServiceInstaller, new()
-            => new TServiceInstaller().Install(services);
+            => new TServiceInstaller().Install(container);
     }
 }

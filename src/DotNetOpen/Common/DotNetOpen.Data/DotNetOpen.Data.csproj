@@ -43,8 +43,17 @@
     <Compile Include="..\GeneralAssemblyInfo.cs">
       <Link>Properties\GeneralAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="IDomainService.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="INonAutoIncrementID.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetOpen.Common\DotNetOpen.Common.csproj">
+      <Project>{024761fe-6373-4228-a6ac-f6c54e634b45}</Project>
+      <Name>DotNetOpen.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
