@@ -47,8 +47,11 @@
     <Compile Include="IEntityService.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="INonAutoIncrementID.cs" />
+    <Compile Include="IReadOnlyEntityService.cs" />
+    <Compile Include="IReadOnlyRepository.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadOnlyEntityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DotNetOpen.Common\DotNetOpen.Common.csproj">

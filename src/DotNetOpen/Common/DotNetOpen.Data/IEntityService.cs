@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotNetOpen.Data
 {
-    public interface IEntityService<T>
+    public interface IEntityService<T>: IReadOnlyEntityService<T>
         where T : class
     {
         bool Add(T entity);

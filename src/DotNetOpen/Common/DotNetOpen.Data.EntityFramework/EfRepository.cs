@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotNetOpen.Data.EntityFramework
 {
-    public class EfRepository<TDbContext, T> : IRepository<T>
+    public class EfRepository<TDbContext, T> : IRepository<T>, IReadOnlyRepository<T>
         where T : class
         where TDbContext : EfDbContext
     {

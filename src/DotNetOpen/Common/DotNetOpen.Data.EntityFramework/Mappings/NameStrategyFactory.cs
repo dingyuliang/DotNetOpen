@@ -10,6 +10,7 @@ namespace DotNetOpen.Data.EntityFramework.Mappings
     public static class NameStrategyFactory
     {
         #region Const
+        public const string EntityViewPrefix = "view";
         public const string EntityTablePrefix = "Tbl";
         public const string XrefTablePrefix = "Xref";
         public const string FoeignKeySuffix = "Id";
@@ -38,7 +39,18 @@ namespace DotNetOpen.Data.EntityFramework.Mappings
                 _AddUnderscoresBetweenWordsThenToLowerNameStrategy
             }
         };
-        
+
+        /// <summary>
+        /// View Strategy
+        /// </summary>
+        static readonly INameStrategy _EntityViewStrategy = new CompositeNameStrategy
+        {
+            Strategies = new List<INameStrategy>{
+                new AddPrefixNameStrategy(EntityViewPrefix),
+                _AddUnderscoresBetweenWordsThenToLowerNameStrategy
+            }
+        };
+
         /// <summary>
         /// Table Strategy
         /// </summary>
@@ -111,6 +123,7 @@ namespace DotNetOpen.Data.EntityFramework.Mappings
         #region GetTableNameStrategy
         public static ITableNameStrategy XrefTableNameStrategy = new TableNameStrategyAdaptor(_XrefNameStrategy);
         public static ITableNameStrategy EntityTableNameStrategy = new TableNameStrategyAdaptor(_EntityNameStrategy);
+        public static ITableNameStrategy EntityViewNameStrategy = new TableNameStrategyAdaptor(_EntityViewStrategy);
         /// <summary>
         /// get table name strategy
         /// </summary>
@@ -122,6 +135,8 @@ namespace DotNetOpen.Data.EntityFramework.Mappings
             {
                 case TableNameStrategyType.XrefTable:
                     return XrefTableNameStrategy;
+                case TableNameStrategyType.View:
+                    return EntityViewNameStrategy;
                 case TableNameStrategyType.EntityTable:
                 default:
                     return EntityTableNameStrategy;
@@ -173,6 +188,10 @@ namespace DotNetOpen.Data.EntityFramework.Mappings
         /// Xref Table
         /// </summary>
         XrefTable,
+        /// <summary>
+        /// View, view_...
+        /// </summary>
+        View,
     }
     #endregion
 

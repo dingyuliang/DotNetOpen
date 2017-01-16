@@ -12,7 +12,7 @@ namespace DotNetOpen.Data
     {
     }
 
-    public interface IRepository<T>: IRepository
+    public interface IRepository<T>: IRepository, IReadOnlyRepository<T>
         where T : class
     {
         bool Add( T entity);
@@ -20,7 +20,6 @@ namespace DotNetOpen.Data
         bool Update(T entity);
         void UpdateRange(params T[] entities);
         bool Delete(T entity);
-        void DeleteRange(params T[] entities);
-        IEnumerable<T> FindAll();
+        void DeleteRange(params T[] entities); 
     }
 }

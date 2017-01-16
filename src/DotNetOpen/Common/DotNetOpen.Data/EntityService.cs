@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotNetOpen.Data
 {
-    public class EntityService<T> : IEntityService<T>
+    public class EntityService<T> : IEntityService<T>, IReadOnlyEntityService<T>
         where T : class
     {
         #region Ctor
