@@ -16,11 +16,7 @@ namespace DotNetOpen.Data.EntityFramework.Mappings
         #region Const
         const string COLUMN_ID = "ID";
         #endregion
-
-        #region static
-        readonly MethodInfo PropertyMethodInfo = typeof(EntityTypeConfiguration<T>).GetMethod("Property");
-        #endregion
-
+        
         #region Ctor
         public EntityMapping()
             :this(NameStrategyFactory.EntityTableNameStrategy, null)

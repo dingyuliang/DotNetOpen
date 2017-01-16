@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Internal;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using DotNetOpen.Common.IoC;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DotNetOpen.Common
 {
-    public class WindsorContainerBootstrapper
+    public class ContainerBootstrapper
     {
         #region Const
         /// <summary>
@@ -25,7 +26,7 @@ namespace DotNetOpen.Common
         #endregion
 
         #region Static Ctor
-        static WindsorContainerBootstrapper()
+        static ContainerBootstrapper()
         {
             Container = new WindsorContainer();
         }
@@ -34,6 +35,9 @@ namespace DotNetOpen.Common
         #region Initialize
         public static void Initialize()
         {
+            // Register Array Facility, to solve array parameters
+            Container.AddFacility<WindsorArrayFacility>();
+
             Container.Register(Component.For<IWindsorContainer>().Instance(Container));
 
             var containerInstallerAssembliesRegex = ConfigurationManager.AppSettings[AppKey_ContainerInstallerAssembliesRegex] ?? string.Empty;

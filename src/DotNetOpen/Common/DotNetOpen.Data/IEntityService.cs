@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DotNetOpen.Data
 {
-    public interface IDomainService<T>
+    public interface IEntityService<T>
+        where T : class
     {
         bool Add(T entity);
         void AddRange(params T[] entities);

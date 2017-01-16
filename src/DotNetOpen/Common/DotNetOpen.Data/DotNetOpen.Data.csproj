@@ -43,7 +43,8 @@
     <Compile Include="..\GeneralAssemblyInfo.cs">
       <Link>Properties\GeneralAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="IDomainService.cs" />
+    <Compile Include="EntityService.cs" />
+    <Compile Include="IEntityService.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="INonAutoIncrementID.cs" />
     <Compile Include="IRepository.cs" />

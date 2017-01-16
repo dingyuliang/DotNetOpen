@@ -63,11 +63,12 @@
     <Compile Include="Helpers\ExpressionHelper.cs" />
     <Compile Include="Helpers\FormatHelper.cs" />
     <Compile Include="Helpers\RandomHelper.cs" />
-    <Compile Include="IoC\IServiceInstaller.cs" />
+    <Compile Include="IoC\ServiceLifetime.cs" />
     <Compile Include="IoC\ServiceInstallerAttribute.cs" />
-    <Compile Include="IoC\ServiceInstallerExtensions.cs" />
     <Compile Include="IoC\ServiceInstallerFactory.cs" />
-    <Compile Include="IoC\WindsorContainerBootstrapper.cs" />
+    <Compile Include="IoC\ContainerBootstrapper.cs" />
+    <Compile Include="IoC\WindsorArrayFacility.cs" />
+    <Compile Include="IoC\WindsorContainerExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -32,34 +32,33 @@ namespace DotNetOpen.Data.EntityFramework
         /// Add Mapping by Assemblies, all Entity Mapping Types which implements IEntityMapping and not abstract, and have parameterless constructor.
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="serviceLifetime"></param>
         /// <param name="assemblies"></param>
         /// <returns></returns>
-        public static IWindsorContainer AddMappings(this IWindsorContainer services, params Assembly[] assemblies)
-            => services.Register(
-                assemblies.Select(a => Classes.FromAssembly(a)
-                       .Where(type => typeof(IEntityMapping).IsAssignableFrom(type) && !type.IsAbstract && type.GetConstructors().Any(c => !c.GetParameters().Any()))
-                       .WithService.AllInterfaces()).ToArray()
-               );
+        public static IWindsorContainer AddMappings(this IWindsorContainer services, ServiceLifetime serviceLifetime= ServiceLifetime.Singleton,  params Assembly[] assemblies)
+            => services.Register<IEntityMapping>(t => t.GetConstructors().Any(c => !c.GetParameters().Any()), serviceLifetime, assemblies);
 
         /// <summary>
         /// Add Entity Mapping by Entity Types and using EntityTableNameNameStrategy and PrimitiveColumnNameNameStrategy (LifestyleSingleton)
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="services"></param>
+        /// <param name="serviceLifetime"></param>
         /// <param name="domainTypes"></param>
         /// <returns></returns>
-        public static IWindsorContainer AddMappings(this IWindsorContainer services, params Type[] domainTypes)
-            => Check.NotNull(services, nameof(services)).Register(domainTypes.Select(a => Component.For(typeof(IEntityMapping), typeof(IEntityMapping<>).MakeGenericType(a)).ImplementedBy(typeof(EntityMapping<>).MakeGenericType(a)).LifestyleSingleton()).ToArray());
+        public static IWindsorContainer AddMappings(this IWindsorContainer services, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton, params Type[] domainTypes)
+            => Check.NotNull(services, nameof(services)).Register(domainTypes.Select(a => Component.For(typeof(IEntityMapping), typeof(IEntityMapping<>).MakeGenericType(a)).ImplementedBy(typeof(EntityMapping<>).MakeGenericType(a)).SetupLifestyle(serviceLifetime)).ToArray());
 
         /// <summary>
         /// Add Entity Mapping by Entity Type and using EntityTableNameNameStrategy and PrimitiveColumnNameNameStrategy (LifestyleSingleton)
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="services"></param>
+        /// <param name="serviceLifetime"></param>
         /// <returns></returns>
-        public static IWindsorContainer AddMapping<TEntity>(this IWindsorContainer services)
+        public static IWindsorContainer AddMapping<TEntity>(this IWindsorContainer services, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
             where TEntity : class
-            => Check.NotNull(services, nameof(services)).Register(Component.For(typeof(IEntityMapping), typeof(IEntityMapping<TEntity>)).ImplementedBy(typeof(EntityMapping<TEntity>)).LifestyleSingleton());
+            => Check.NotNull(services, nameof(services)).Register(Component.For(typeof(IEntityMapping), typeof(IEntityMapping<TEntity>)).ImplementedBy(typeof(EntityMapping<TEntity>)).SetupLifestyle(serviceLifetime));
 
         /// <summary>
         /// Add Mapping by configuring Entity Type Builder
@@ -69,9 +68,9 @@ namespace DotNetOpen.Data.EntityFramework
         /// <param name="config"></param>
         /// <param name="serviceLifeTime"></param>
         /// <returns></returns>
-        public static IWindsorContainer AddMappingConfig<T>(this IWindsorContainer services, Action<EntityTypeConfiguration<T>> config)
+        public static IWindsorContainer AddMappingConfig<T>(this IWindsorContainer services, Action<EntityTypeConfiguration<T>> config, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
             where T : class
-            => Check.NotNull(services, nameof(services)).Register(Component.For(typeof(IEntityMapping), typeof(IEntityMapping<T>)).UsingFactoryMethod(s => new ConfigurableEntityMapping<T>(Check.NotNull(config, nameof(config)))).LifestyleSingleton());
+            => Check.NotNull(services, nameof(services)).Register(Component.For(typeof(IEntityMapping), typeof(IEntityMapping<T>)).UsingFactoryMethod(s => new ConfigurableEntityMapping<T>(Check.NotNull(config, nameof(config)))).SetupLifestyle(serviceLifetime));
 
         /// <summary>
         /// Add basic entity mapping by using PrimitiveColumnNameNameStrategy
@@ -81,11 +80,13 @@ namespace DotNetOpen.Data.EntityFramework
         /// <param name="tableNameStrategyType"></param>
         /// <param name="columnNameStrategyType"></param>
         /// <param name="mappingConfig"></param>
+        /// <param name="serviceLifeTime"></param>
         /// <returns></returns>
         public static IWindsorContainer AddMapping<T>(this IWindsorContainer services, 
                                                       TableNameStrategyType tableNameStrategyType = TableNameStrategyType.EntityTable,
                                                       ColumnNameStrategyType columnNameStrategyType = ColumnNameStrategyType.Primitive,
-                                                      Action<EntityTypeConfiguration<T>> mappingConfig = null)
+                                                      Action<EntityTypeConfiguration<T>> mappingConfig = null, 
+                                                      ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
            where T : class
             => Check.NotNull(services, nameof(services)).AddMapping<T>(s =>
             {
@@ -93,7 +94,7 @@ namespace DotNetOpen.Data.EntityFramework
                 if (mappingConfig != null)
                     mapping.Config(mappingConfig);
                 return mapping;
-            });
+            }, serviceLifetime);
 
         /// <summary>
         /// Add Mapping into Service Collection base on Entity Mapping Func
@@ -101,10 +102,12 @@ namespace DotNetOpen.Data.EntityFramework
         /// <typeparam name="T"></typeparam>
         /// <param name="services"></param>
         /// <param name="getEntityMappingFunc"></param>
+        /// <param name="serviceLifeTime"></param>
         /// <returns></returns>
-        public static IWindsorContainer AddMapping<T>(this IWindsorContainer services, Func<IWindsorContainer, IEntityMapping<T>> getEntityMappingFunc)
+        public static IWindsorContainer AddMapping<T>(this IWindsorContainer services, Func<IWindsorContainer, IEntityMapping<T>> getEntityMappingFunc,
+                                                      ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
             where T : class
-        => Check.NotNull(services, nameof(services)).Register(Component.For(typeof(IEntityMapping), typeof(IEntityMapping<T>)).UsingFactoryMethod(() => getEntityMappingFunc(services)).LifestyleSingleton());
+        => Check.NotNull(services, nameof(services)).Register(Component.For(typeof(IEntityMapping), typeof(IEntityMapping<T>)).UsingFactoryMethod(() => getEntityMappingFunc(services)).SetupLifestyle(serviceLifetime));
 
         #endregion
 

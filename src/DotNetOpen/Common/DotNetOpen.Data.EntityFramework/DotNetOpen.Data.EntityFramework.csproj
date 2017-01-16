@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="EfDbContext.cs" />
     <Compile Include="EfRepository.cs" />
+    <Compile Include="EntityServiceExtenions.cs" />
     <Compile Include="Mappings\ConfigurableEntityMapping.cs" />
     <Compile Include="Mappings\EntityMapping.cs" />
     <Compile Include="Mappings\IEntityMapping-generic.cs" />
