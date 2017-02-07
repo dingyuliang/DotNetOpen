@@ -53,6 +53,16 @@
       <Link>Properties\GeneralAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Check.cs" />
+    <Compile Include="Data\DataExtensions.cs" />
+    <Compile Include="Data\FilterOption.cs" />
+    <Compile Include="Data\GeneralListInput.cs" />
+    <Compile Include="Data\GeneralListOutput.cs" />
+    <Compile Include="Data\GeneralListOutput.generic.cs" />
+    <Compile Include="Data\ListInput.cs" />
+    <Compile Include="Data\ListOutput.cs" />
+    <Compile Include="Data\SearchOperator.cs" />
+    <Compile Include="Data\SortDirection.cs" />
+    <Compile Include="Data\SortOption.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
@@ -72,9 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XML\CDataText.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

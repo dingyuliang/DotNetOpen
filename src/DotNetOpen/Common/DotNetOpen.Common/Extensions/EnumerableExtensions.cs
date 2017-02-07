@@ -8,11 +8,13 @@ namespace DotNetOpen.Common
 {
     public static class EnumerableExtension
     {
+        #region Static
         public static readonly char[] DefaultSeperators = { '~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', ' ', ';', ':', '"', '\'', '{', '}', '[', ']', '\\', '|', '?', '/', ',', '<', '.', '>' };
         private static readonly MethodInfo QueryableOrderByMethod = null;
         private static readonly MethodInfo QueryableOrderByDescendingMethod = null;
         private static readonly MethodInfo QueryableThenByMethod = null;
         private static readonly MethodInfo QueryableThenByDescendingMethod = null;
+        #endregion
 
         #region Ctor
         static EnumerableExtension()
